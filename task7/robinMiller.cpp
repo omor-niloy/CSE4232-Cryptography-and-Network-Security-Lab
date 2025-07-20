@@ -32,16 +32,25 @@ bool robinMiller(long long int p, int iterations = 5){
         long long a = rng(2, p - 2);
         long long z = power(a, m, p);
         if (z == 1 || z == p - 1) continue;
-
+    
         bool found = false;
+        long long d = -1;
         for (int j = 1; j < b; j++) {
             z = (z * z) % p;
             if (z == p - 1) {
                 found = true;
                 break;
+            } else {
+                long long g = __gcd(z - 1, p);
+                if (g > 1 && g < p) {
+                    d = g;
+                }
             }
         }
-        if (!found) return false;
+        if (!found) {
+            if (d != -1) cout << "Factor: " << d << endl;
+            return false;
+        }
     }
     return true;
 }
